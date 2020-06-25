@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add Edit Remove HTML Table Row</title>
+        <meta charset="windows-1252">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <style>
+            
+            .container{overflow: hidden}
+            
+            .tab-2{margin-left: 50px}
+            .tab-2 input{display: block;margin-bottom: 10px}
+            tr{transition:all .25s ease-in-out}
+            tr:hover{background-color:#EEE;cursor: pointer}
+            
+        </style>
+        
+    </head>
+    <body style="background-color:powderblue;">
+        <h1>Product List</h1>
+        <div class="container">
+          
+          <div class="tab tab-1">
+            Product Name :<input type="text" name="pname" id="pname">
+            Product description :<input type="text" name="desc" id="desc">
+            Price :<input type="text" name="price" id="price">
+            <br><br>
+
+            <button onclick="addHtmlTableRow();">Add</button>
+            <button onclick="editHtmlTbleSelectedRow();">Edit</button>
+            <button onclick="removeSelectedRow();">Remove</button>
+        </div>
+          <br><br><br>
+          <div class="tab tab-2">
+                <table id="table" border="1">
+                    <tr>
+                        <th>Product  Name</th>
+                        <th>Product Discription</th>
+                        <th>Price</th>
+                    </tr>
+                    
+                </table>
+            </div>
+            
+        </div>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <div id="google_translate_element" ></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+}
+</script>
+<script src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+        <script>
+            
+            var rIndex,
+                table = document.getElementById("table");
+            
+            // check the empty input
+            function checkEmptyInput()
+            {
+                var isEmpty = false,
+                    pname = document.getElementById("pname").value,
+                    desc = document.getElementById("desc").value,
+                    price = document.getElementById("price").value;
+            
+                if(pname === ""){
+                    alert("First Name Connot Be Empty");
+                    isEmpty = true;
+                }
+                else if(desc === ""){
+                    alert("Last Name Connot Be Empty");
+                    isEmpty = true;
+                }
+                else if(price === ""){
+                    alert("Age Connot Be Empty");
+                    isEmpty = true;
+                }
+                return isEmpty;
+            }
+            
+            // add Row
+            function addHtmlTableRow()
+            {
+                // get the table by id
+                // create a new row and cells
+                // get value from input text
+                // set the values into row cell's
+                if(!checkEmptyInput()){
+                var newRow = table.insertRow(table.length),
+                    cell1 = newRow.insertCell(0),
+                    cell2 = newRow.insertCell(1),
+                    cell3 = newRow.insertCell(2),
+                    pname = document.getElementById("pname").value,
+                    desc = document.getElementById("desc").value,
+                    price = document.getElementById("price").value;
+            
+                cell1.innerHTML = pname;
+                cell2.innerHTML = desc;
+                cell3.innerHTML = price;
+                // call the function to set the event to the new row
+                selectedRowToInput();
+            }
+            }
+            
+            // display selected row data into input text
+            function selectedRowToInput()
+            {
+                
+                for(var i = 1; i < table.rows.length; i++)
+                {
+                    table.rows[i].onclick = function()
+                    {
+                      // get the seected row index
+                      rIndex = this.rowIndex;
+                      document.getElementById("pname").value = this.cells[0].innerHTML;
+                      document.getElementById("desc").value = this.cells[1].innerHTML;
+                      document.getElementById("price").value = this.cells[2].innerHTML;
+                    };
+                }
+            }
+            selectedRowToInput();
+            
+            function editHtmlTbleSelectedRow()
+            {
+             var pname = document.getElementById("pname").value,
+                    desc = document.getElementById("desc").value,
+                    price = document.getElementById("price").value;
+               if(!checkEmptyInput()){
+                table.rows[rIndex].cells[0].innerHTML = pname;
+                table.rows[rIndex].cells[1].innerHTML = desc;
+                table.rows[rIndex].cells[2].innerHTML = price;
+              }
+            }
+            
+            function removeSelectedRow()
+            {
+                table.deleteRow(rIndex);
+                // clear input text
+                document.getElementById("pname").value = "";
+                document.getElementById("desc").value = "";
+                document.getElementById("price").value = "";
+            }
+        </script>
+        
+    </body>
+</html>
+
